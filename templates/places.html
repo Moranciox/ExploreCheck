@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lugares</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lugares</h1>
+        <a class="btn btn-primary" href="/add_place">Agregar Lugar</a>
+
+        <br><br>
+        <h2>Lista de lugares:</h2>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-primary">
+                <div class="row">
+                    <div class="col-6"><strong>Lugar</strong></div>
+                    <div class="col-3 text-center"><strong>Promedio Calificación</strong></div>
+                    <div class="col-3 text-center"><strong>Acciones</strong></div>
+                </div>
+            </li>
+            {% for lugar in lugares %}
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-6">
+                        <a href="/submit_comment_and_rate/{{ lugar }}">{{ lugar }}</a>
+                    </div>
+                    <div class="col-3 text-center">
+                        {% if promedios.get(lugar) is not none %}
+                            <span class="badge badge-primary badge-pill">{{ "%.2f"|format(promedios.get(lugar)) }}</span>
+                        {% else %}
+                            <span class="badge badge-primary badge-pill">N/A</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-3 text-center">
+                        <div class="buttons btn-group">
+                            <a class="btn btn-success btn-sm" href="/submit_comment_and_rate/{{ lugar }}">Comentar y Puntuar</a>
+                            <a href="/add_interest/{{ lugar }}" class="btn btn-primary btn-sm">Agregar Punto de Interés</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

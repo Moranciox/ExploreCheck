@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inicio de Sesión y Registro</title>
+  <!-- Agrega los enlaces a las librerías de Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Agrega el estilo personalizado para el promedio -->
+  <style>
+    .promedio {
+      color: black;
+    }
+
+    /* Estilo para el encabezado de la lista */
+    .list-header {
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    /* Centrar contenido de las columnas */
+    .list-group-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row justify-content-end mt-3">
+      <div class="col-auto">
+        <a href="/login" class="btn btn-primary">Iniciar Sesión</a>
+        <a href="/register" class="btn btn-success">Registrarse</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <h1 class="mb-4">Listado de Lugares</h1>
+    
+    <!-- Formulario de búsqueda -->
+    <form action="/buscar_lugar" method="post" class="mb-3">
+      <div class="row">
+        <div class="col-md-8">
+          <input type="text" name="nombre_lugar" class="form-control" placeholder="Buscar lugar...">
+        </div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+      </div>
+    </form>
+    
+    <div class="list-group">
+      <!-- Encabezado de la lista -->
+      <div class="list-header d-flex justify-content-between align-items-center">
+        <span>Nombre del Lugar</span>
+        <span>Promedio</span>
+      </div>
+      {% for lugar, promedio in lugares_con_promedio %}
+        <li class="list-group-item">
+          <a href="/info/{{ lugar }}" class="text-decoration-none text-dark">{{ lugar }}</a>
+          <span class="badge badge-primary badge-pill promedio">{{ promedio | round(2) }}</span>
+        </li>
+      {% endfor %}
+    </div>
+  </div>
+
+</body>
+</html>
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buscar lugar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Buscar lugar</h1>
+            </div>
+            <div class="col-md-6 text-right">
+                <p>
+                    Usuario: {{ username }} | <a href="/logout">Cerrar sesión</a>
+                </p>
+                <p>
+                    {{ nombre }} {{ apellido }}
+                </p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="POST" action="/search_place">
+                    <div class="form-group">
+                        <label for="place">Lugar:</label>
+                        <input type="text" class="form-control" id="place" name="place" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

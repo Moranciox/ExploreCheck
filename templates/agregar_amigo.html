@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agregar Amigo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Agregar Amigo</h1>
+        <form method="POST" action="/search_user">
+            <div class="form-group">
+                <label for="search">Buscar usuario:</label>
+                <input type="text" class="form-control" id="search" name="search_term" placeholder="Buscar por username, nombre o apellido">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Buscar">
+        </form>
+        <br>
+        <ul class="list-group">
+            {% for usuario in usuarios %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ usuario['username'] }}
+                {% if usuario['username'] in amigos_list %}
+                    <button type="button" class="btn btn-secondary" disabled>Amigo</button>
+                {% else %}
+                    <form method="POST" action="/add_friend">
+                        <input type="hidden" name="amigo" value="{{ usuario['username'] }}">
+                        <button type="submit" class="btn btn-primary">Agregar</button>
+                    </form>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+

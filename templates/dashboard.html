@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Dashboard</h1>
+            </div>
+            <div class="col-md-6 text-right">
+                <p>
+                    Usuario: {{ username }} | <a href="/logout">Cerrar sesión</a>
+                </p>
+                <p>
+                    {{ nombre }} {{ apellido }}
+                </p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Lista de amigos:</h2>
+                <ul class="list-group">
+                    {% for amigo in amigos %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ amigo }}
+                        <form id="remove-form-{{ loop.index }}" method="POST" action="/remove_friend">
+                            <input type="hidden" name="amigo" value="{{ amigo }}">
+                            <button type="button" class="btn btn-danger" onclick="confirmDelete({{ loop.index }})">Eliminar</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h2>Agregar amigo</h2>
+                <a class="btn btn-primary" href="/add_friend">Agregar amigo</a>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Lugares</h2>
+                <a class="btn btn-primary" href="/places">Ver lugares</a>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Tus últimos checks</h2>
+                <ul class="list-group">
+                    {% for check in mis_ultimos_checks %}
+                    <li class="list-group-item">
+                        <strong>Usuario:</strong> {{ check['usuario'] }} <br>
+                        <strong>Lugar:</strong> {{ check['lugar'] }} <br>
+                        <strong>Comentario:</strong> {{ check['comentario'] }} <br>
+                        <strong>Puntuación:</strong> {{ check['puntuacion'] }}/5
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h2>Últimos checks de tus amigos</h2>
+                <ul class="list-group">
+                    {% for check in amigos_ultimos_checks %}
+                    <li class="list-group-item">
+                        <strong>Usuario:</strong> {{ check['usuario'] }} <br>
+                        <strong>Lugar:</strong> {{ check['lugar'] }} <br>
+                        <strong>Comentario:</strong> {{ check['comentario'] }} <br>
+                        <strong>Puntuación:</strong> {{ check['puntuacion'] }}/5
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function confirmDelete(index) {
+            var confirmation = confirm("¿Estás seguro de eliminar esta amistad?");
+            if (confirmation) {
+                document.getElementById("remove-form-" + index).submit();
+            }
+        }   
+    </script>
+</body>
+</html>
+
+
+
+
+

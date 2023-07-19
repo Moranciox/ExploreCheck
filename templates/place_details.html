@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalles del Lugar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Detalles del Lugar - {{ lugar['nombre'] }}</h1>
+        <p><strong>Descripción:</strong> {{ lugar['descripcion'] }}</p>
+
+        <h2>Agregar Comentario del Lugar:</h2>
+        <form method="POST" action="/add_check/{{ lugar['nombre'] }}">
+            <div class="form-group">
+                <label for="comment_lugar">Comentario:</label>
+                <textarea class="form-control" id="comment_lugar" name="comentario" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="rating_lugar">Puntuación (1-5):</label>
+                <input type="number" class="form-control" id="rating_lugar" name="puntuacion" min="1" max="5" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar Comentario y Puntuación del Lugar</button>
+        </form>
+
+        <h2>Puntos de Interés:</h2>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Promedio</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for punto in lugar['puntos_interes'] %}
+                <tr>
+                    <td>{{ punto['nombre'] }}</td>
+                    <td>
+                        <span class="badge badge-primary">{{ promedios_puntos_interes.get(punto['nombre'], 0)|round(2) }}</span>
+                    </td>
+                    <td>{{ punto['descripcion'] }}</td>
+                    <td>
+                        <form method="POST" action="/add_check_punto/{{ lugar['nombre'] }}/{{ punto['nombre'] }}">
+                            <div class="form-group">
+                                <label for="comment">Comentario:</label>
+                                <textarea class="form-control" id="comment" name="comentario" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="rating">Puntuación (1-5):</label>
+                                <input type="number" class="form-control" id="rating" name="puntuacion" min="1" max="5" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">Comentar y Puntuar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+        <h2>Comentarios y Puntuaciones:</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Comentarios del Lugar:</h3>
+                <ul class="list-group">
+                    {% for check in checks_lugar %}
+                        <li class="list-group-item">
+                            <strong>Usuario:</strong> {{ check['usuario'] }} <br>
+                            <strong>Comentario:</strong> {{ check['comentario'] }} <br>
+                            <strong>Puntuación:</strong> {{ check['puntuacion'] }}/5
+                            <strong>Fecha y Hora:</strong> {{ check['fecha_hora'] }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Comentarios de Puntos de Interés:</h3>
+                <ul class="list-group">
+                    {% for check in checks_punto_interes %}
+                        <li class="list-group-item">
+                            <strong>Usuario:</strong> {{ check['usuario'] }} <br>
+                            <strong>Punto de Interés:</strong> {{ check['punto'] }} <br>
+                            <strong>Comentario:</strong> {{ check['comentario'] }} <br>
+                            <strong>Puntuación:</strong> {{ check['puntuacion'] }}/5
+                            <strong>Fecha y Hora:</strong> {{ check['fecha_hora'] }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Función para recargar la página después de enviar un formulario
+        function reloadPageAfterFormSubmit() {
+            window.location.reload();
+        }
+
+        // Asignar la función de recarga a todos los formularios en la página
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', reloadPageAfterFormSubmit);
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

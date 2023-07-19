@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Información del Lugar</title>
+  <!-- Agrega los enlaces a las librerías de Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Agrega el estilo personalizado para el promedio -->
+  <style>
+    .promedio {
+      color: black;
+    }
+
+    /* Estilo para el encabezado de la lista */
+    .list-header {
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    /* Centrar contenido de las columnas */
+    .list-group-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Estilo para el bloque de comentarios */
+    .comentarios {
+      margin-top: 20px;
+      border-top: 1px solid #dee2e6;
+      padding-top: 20px;
+    }
+
+    /* Estilo para cada comentario */
+    .comentario {
+      margin-bottom: 10px;
+    }
+
+    /* Estilo para el encabezado de la lista de comentarios */
+    .comentarios-header {
+      font-size: 16px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="mb-4">Información del Lugar - {{ lugar['nombre'] }}</h1>
+    <p><strong>Descripción:</strong> {{ lugar['descripcion'] }}</p>
+
+    <h2>Comentarios:</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Comentarios del Lugar:</h3>
+        <ul class="list-group">
+          {% for check in comentarios_lugar %}
+            <li class="list-group-item">
+              <strong>Usuario:</strong> {{ check['usuario'] }} <br>
+              <strong>Comentario:</strong> {{ check['comentario'] }} <br>
+              <strong>Puntuación:</strong> {{ check['puntuacion'] }}/5
+              <strong>Fecha y Hora:</strong> {{ check['fecha_hora'] }}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <h3>Comentarios de Puntos de Interés:</h3>
+        {% for punto in lugar['puntos_interes'] %}
+          <div class="comentarios">
+            <h4 class="comentarios-header">{{ punto['nombre'] }}</h4>
+            <ul class="list-group">
+              {% set comentarios_punto = comentarios_puntos_interes[punto['nombre']] %}
+              {% for comentario in comentarios_punto %}
+                <li class="list-group-item comentario">
+                  <strong>Usuario:</strong> {{ comentario['usuario'] }} <br>
+                  <strong>Comentario:</strong> {{ comentario['comentario'] }} <br>
+                  <strong>Puntuación:</strong> {{ comentario['puntuacion'] }}/5
+                  <strong>Fecha y Hora:</strong> {{ comentario['fecha_hora'] }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <h2>Puntos de Interés:</h2>
+    <ul class="list-group">
+      {% for punto in lugar['puntos_interes'] %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ punto['nombre'] }} - {{ punto['descripcion'] }}
+          <span class="badge badge-primary badge-pill promedio">{{ promedios_puntos_interes.get(punto['nombre'], 0) | round(2) }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>

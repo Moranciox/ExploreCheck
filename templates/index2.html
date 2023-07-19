@@ -1,0 +1,32 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Explora y Comparte</title>
+</head>
+<body>
+  <h1>Explora y Comparte</h1>
+
+  <form action="/submit" method="post">
+    <label for="username">Nombre de usuario:</label>
+    <input type="text" name="username" id="username" required><br>
+
+    <label for="place_name">Nombre del lugar:</label>
+    <input type="text" name="place_name" id="place_name" required><br>
+
+    <label for="opcion_seleccionada">Selecciona una opción:</label>
+    <select name="opcion_seleccionada" id="opcion_seleccionada" required>
+      <option value="1">1 Estrella</option>
+      <option value="2">2 Estrellas</option>
+      <option value="3">3 Estrellas</option>
+      <option value="4">4 Estrellas</option>
+      <option value="5">5 Estrellas</option>
+    </select><br>
+
+    <label for="comentario">Comentario:</label>
+    <textarea name="comentario" id="comentario" required></textarea><br>
+
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+</html>
